@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     PlayerData PlayerData;
-    Rigidbody PlayerRigidbody;
+    CharacterController CharacterController;
     Transform PlayerCamera;
     Animator PlayerAnimator;
 
     void Start()
     {
         PlayerData = GetComponent<PlayerData>();
-        PlayerRigidbody = GetComponent<Rigidbody>();
+        CharacterController = GetComponent<CharacterController>();
         PlayerCamera = Camera.main.transform;
         PlayerAnimator = GetComponent<Animator>();
     }
@@ -169,7 +169,6 @@ public class PlayerController : MonoBehaviour
     
     }
 
-
     void HandleMovement()
     {
         switch (PlayerData.State)
@@ -184,12 +183,12 @@ public class PlayerController : MonoBehaviour
                 break;
 
             default:
-                PlayerRigidbody.MovePosition(transform.position + ((-transform.up * 0.4f) + (transform.right * Input.GetAxis("Horizontal") * PlayerData.MovementSpeed) + (transform.forward * Input.GetAxis("Vertical") * PlayerData.MovementSpeed)));
+                CharacterController.Move(((transform.right * Input.GetAxis("Horizontal") * PlayerData.MovementSpeed) + (transform.forward * Input.GetAxis("Vertical") * PlayerData.MovementSpeed)));
+                CharacterController.Move(Vector3.up * -9.81f);
                 LookAround();
                 break;
         }
     }
-
 
     [HideInInspector] public Vector3 CameraRotation = Vector3.zero;
 

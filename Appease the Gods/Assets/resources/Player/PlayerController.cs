@@ -17,10 +17,14 @@ public class PlayerController : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
     }
 
+    void FixedUpdate()
+    {
+        HandleMovement();
+    }
+
     void Update()
     {
         HandleInput();
-        HandleMovement();
     }
 
     public void HandleInput()
@@ -91,8 +95,11 @@ public class PlayerController : MonoBehaviour
                 PlayerAnimator.SetBool("IsHitting", false);
                 PlayerAnimator.SetBool("IsAiming", false);
 
+                PlayerData.MovementSpeed = 0.224f;
+
                 if(!Input.GetKey(KeyCode.LeftShift))
                 {
+                    PlayerData.MovementSpeed = 0.114f;
                     PlayerData.SetState("Idle");
                 }
 

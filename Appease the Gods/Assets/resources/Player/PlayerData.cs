@@ -6,7 +6,8 @@ public class PlayerData : MonoBehaviour
 {
     public string State;
     public float MovementSpeed;
-    public float Health;
+    public float Health = 100.0f;
+    public int Phase = 0;
     public bool PickaxeBroken = true;
     public bool AxeBroken = true;
     
@@ -16,12 +17,12 @@ public class PlayerData : MonoBehaviour
     {
         SetState("Idle");
         MovementSpeed = 0.112f;
+        SetPhase(0);
     }
 
     public void SetState(string newState)
     {
         State = newState;
-        SendMessage("PlayerStateUpdated", newState);
     }
 
     public void UpdateResource(string type, int count)
@@ -123,6 +124,13 @@ public class PlayerData : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         Health += amount;
+        SendMessage("UpdateHealth");
+    }
+
+    public void SetPhase(int phase)
+    {
+        Phase = phase;
+        transform.Find("HUD").SendMessage("UpdatePhase");
     }
 
 }

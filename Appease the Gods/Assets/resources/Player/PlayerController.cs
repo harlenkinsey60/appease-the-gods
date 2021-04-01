@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
                     PlayerData.SetState("Paused");
                 }
 
+                if(Input.GetMouseButton(0))
+                {
+                    PlayerData.SetState("Hitting");
+                }
+
                 break;
 
             case "Walking":
@@ -160,6 +165,11 @@ public class PlayerController : MonoBehaviour
                 PlayerAnimator.SetBool("IsHitting", true);
                 PlayerAnimator.SetBool("IsAiming", false);
 
+                if(!Input.GetMouseButton(0))
+                {
+                    PlayerData.SetState("Idle");
+                }
+
                 break;
 
             case "Paused":
@@ -187,6 +197,10 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case "Paused":
+                break;
+            
+            case "Hitting":
+                LookAround();
                 break;
 
             default:

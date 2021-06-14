@@ -344,6 +344,36 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2551859568286106556, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4672124248784134303, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_Name
+      value: StoneCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954671514796518109, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5087430304887080569, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 227.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682587573683621543, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906466763407699207, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_Name
+      value: MetalCount
+      objectReference: {fileID: 0}
     - target: {fileID: 6331654682859335354, guid: 05fba9d8e64000040a0a4019dab40ba2,
         type: 3}
       propertyPath: m_RootOrder
@@ -413,6 +443,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671342669105771520, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346651967265367693, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_Name
+      value: WoodCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868502758248636106, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9220561132017550289, guid: 05fba9d8e64000040a0a4019dab40ba2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05fba9d8e64000040a0a4019dab40ba2, type: 3}

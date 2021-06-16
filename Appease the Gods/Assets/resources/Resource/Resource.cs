@@ -47,12 +47,4 @@ public class Resource : MonoBehaviour
         ResourceAnimator = GetComponent<Animator>();
     }
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            Decay();
-        }
-    }
-
 }

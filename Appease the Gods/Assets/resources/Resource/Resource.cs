@@ -18,6 +18,11 @@ public class Resource : MonoBehaviour
     public void SetHealth(float health)
     {
         Health = health;
+
+        if(Health <= 0.0f)
+        {
+            Decay();
+        }
     }
 
     public float GetHealth()
@@ -30,7 +35,6 @@ public class Resource : MonoBehaviour
         ResourceAnimator.SetBool("Decay", true);
     }
 
-//Add unity event to call destroy
     public void Destroy()
     {
         Destroy(gameObject);
@@ -40,7 +44,15 @@ public class Resource : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Resource needs to implement animation event for Destroy()");
+        ResourceAnimator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            Decay();
+        }
     }
 
 }

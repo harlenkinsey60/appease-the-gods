@@ -128,7 +128,6 @@ public class PlayerHUD : MonoBehaviour
 
     void Update()
     {
-        
         // Update Timer
         Timer -= Time.deltaTime;
         TimerText.GetComponent<Text>().text = (Mathf.FloorToInt(Timer / 60.0f)).ToString() + ":" + (Mathf.FloorToInt(Timer % 60.0f).ToString());

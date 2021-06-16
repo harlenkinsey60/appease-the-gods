@@ -7,6 +7,7 @@ public class Resource : MonoBehaviour
     public string Type;
     private float Health;
     private Animator ResourceAnimator;
+    private AudioSource DecaySound;
 
     // Getters and Setters
 
@@ -33,6 +34,12 @@ public class Resource : MonoBehaviour
     private void Decay()
     {
         ResourceAnimator.SetBool("Decay", true);
+        
+    }
+    
+    public void PlayDecaySound()
+    {
+        DecaySound.Play();
     }
 
     public void Destroy()
@@ -45,6 +52,7 @@ public class Resource : MonoBehaviour
     void Start()
     {
         ResourceAnimator = GetComponent<Animator>();
+        DecaySound = GetComponent<AudioSource>();
     }
 
 }

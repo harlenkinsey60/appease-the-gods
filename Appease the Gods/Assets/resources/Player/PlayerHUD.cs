@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour
 {
     // UI Dependencies
+
     private GameObject HUD;
     private GameObject HealthBar;
     private GameObject WoodCount;
@@ -20,6 +21,7 @@ public class PlayerHUD : MonoBehaviour
     private GameObject PickaxeDurabilityBar;
 
     // Variables
+
     private int Phase;
     private float Timer;
     private float[] PhaseTimes = new float[] {180.0f, 120.0f, 60.0f};
@@ -27,6 +29,7 @@ public class PlayerHUD : MonoBehaviour
 
 
     // Getters and Setters
+
     public int GetPhase()
     {
         return Phase;
@@ -82,9 +85,13 @@ public class PlayerHUD : MonoBehaviour
     public void SetHealth(float health)
     {
         Health = health;
+
         // Sets scale of HealthBar based on health
+
         HealthBar.transform.localScale = new Vector3(0.5f * (health / 100.0f), 0.3f, 1.0f);
-        // Moves HealthBar so that is correctly overlaps HealthBarBacking
+
+        // Moves HealthBar so that it correctly overlaps HealthBarBacking
+
         HealthBar.transform.localPosition = new Vector3(-527.0f - (Mathf.Abs(health - 100.0f) * 1.23f),-235.0f, 0.0f);
     }
 
@@ -128,7 +135,8 @@ public class PlayerHUD : MonoBehaviour
 
     void Update()
     {
-        // Update Timer
+        // Updates Timer
+
         Timer -= Time.deltaTime;
         TimerText.GetComponent<Text>().text = (Mathf.FloorToInt(Timer / 60.0f)).ToString() + ":" + (Mathf.FloorToInt(Timer % 60.0f).ToString());
     }

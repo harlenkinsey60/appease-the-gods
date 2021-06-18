@@ -1207,7 +1207,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3935473794269681167}
   - component: {fileID: -2622651293040201481}
-  - component: {fileID: -5968683837143124747}
+  - component: {fileID: 1831991195129404839}
+  - component: {fileID: -8794411327712052018}
   m_Layer: 0
   m_Name: Shrek
   m_TagString: Untagged
@@ -1251,7 +1252,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-5968683837143124747
+--- !u!114 &1831991195129404839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1260,7 +1261,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4455832701928066229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e14aa01085dc44a9fcf9c33b1d6bf0, type: 3}
+  m_Script: {fileID: 11500000, guid: a0da42b7d146a8d4ead8c89f25c009cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8794411327712052018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455832701928066229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd745b831e4879409847816f0efe7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4476097887785855823

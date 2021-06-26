@@ -200,39 +200,12 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case "Hitting":
-                LookAround();
                 break;
 
             default:
                 CharacterController.Move(((transform.right * Input.GetAxis("Horizontal") * PlayerData.MovementSpeed) + (transform.forward * Input.GetAxis("Vertical") * PlayerData.MovementSpeed)));
                 CharacterController.Move(Vector3.up * -9.81f);
-                LookAround();
                 break;
         }
     }
-
-    [HideInInspector] public Vector3 CameraRotation = Vector3.zero;
-
-    void LookAround()
-    {
-        transform.Rotate(transform.up * Input.GetAxis("Mouse X") * 10f, Space.World);
-
-        if(CameraRotation.x < 90.0f && CameraRotation.x > -90.0f)
-        {
-            PlayerCamera.Rotate(Input.GetAxis("Mouse Y") * -10f, 0.0f, 0.0f, Space.Self);
-        }
-        else if(CameraRotation.x > 90.0f)
-        {
-            PlayerCamera.localEulerAngles = new Vector3(89.9f, PlayerCamera.localEulerAngles.y, PlayerCamera.localEulerAngles.z);
-            CameraRotation.x = 89.9f;
-        }
-        else if(CameraRotation.x < -90.0f)
-        {
-            PlayerCamera.localEulerAngles = new Vector3(-89.9f, PlayerCamera.localEulerAngles.y, PlayerCamera.localEulerAngles.z);
-            CameraRotation.x = -89.9f;
-        }
-        
-        CameraRotation.x += Input.GetAxis("Mouse Y") * -10f;
-    }
-
 }

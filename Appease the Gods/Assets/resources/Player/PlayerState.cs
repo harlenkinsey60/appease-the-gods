@@ -92,8 +92,6 @@ public class PlayerState : MonoBehaviour
         }
         
         Rotation.x += Input.GetAxis("Mouse Y") * -5f;
-
-        Debug.Log(Rotation.x.ToString());
     }
 
 

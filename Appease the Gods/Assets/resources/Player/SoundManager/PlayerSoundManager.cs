@@ -88,20 +88,14 @@ public class PlayerSoundManager : MonoBehaviour
             case "DamagePlayer":
                 AudioSources[7].Play();
                 break;
-            case "Explosion":
+            case "ShrekSoundOne":
                 AudioSources[8].Play();
                 break;
-            case "MissleInFlight":
+            case "ShrekSoundTwo":
                 AudioSources[9].Play();
                 break;
-            case "ShrekSoundOne":
-                AudioSources[10].Play();
-                break;
-            case "ShrekSoundTwo":
-                AudioSources[11].Play();
-                break;
             case "ShrekSoundThree":
-                AudioSources[12].Play();
+                AudioSources[10].Play();
                 break;
 
 // Add Background Music Here
@@ -140,20 +134,14 @@ public class PlayerSoundManager : MonoBehaviour
             case "DamagePlayer":
                 AudioSources[7].Stop();
                 break;
-            case "Explosion":
+            case "ShrekSoundOne":
                 AudioSources[8].Stop();
                 break;
-            case "MissleInFlight":
+            case "ShrekSoundTwo":
                 AudioSources[9].Stop();
                 break;
-            case "ShrekSoundOne":
-                AudioSources[10].Stop();
-                break;
-            case "ShrekSoundTwo":
-                AudioSources[11].Stop();
-                break;
             case "ShrekSoundThree":
-                AudioSources[12].Stop();
+                AudioSources[10].Stop();
                 break;
 
 // Add Background Music Here

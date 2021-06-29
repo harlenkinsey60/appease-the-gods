@@ -6,6 +6,7 @@ using UnityEngine.Animations.Rigging;
 public class AimWeaponHandler : MonoBehaviour
 {
     public GameObject Bazooka;
+    public GameObject Missile;
     public GameObject HandBone;
     public GameObject ArmBone;
 
@@ -13,7 +14,11 @@ public class AimWeaponHandler : MonoBehaviour
     public float T;
     public Vector3 OriginalBazookaPosition;
     public Quaternion OriginalBazookaRotation;
+    float MissileLaunchTimer;
     
+
+    // Monobehaviour Functions
+
     void Start()
     {
         Bazooka = Instantiate(Bazooka, HandBone.transform);
@@ -21,7 +26,38 @@ public class AimWeaponHandler : MonoBehaviour
         T = 0.0f;
         OriginalBazookaPosition = Vector3.zero;
         OriginalBazookaRotation = new Quaternion(0,0,0,0);
+        MissileLaunchTimer = 0.0f;
     }
+
+    void Update()
+    {
+        // Handles Aiming Bazooka and Launching Missiles
+        if(Input.GetKey(KeyCode.Mouse1))
+        {
+           AimWeapon();
+
+            if(Input.GetKeyUp(KeyCode.Mouse0) && MissileLaunchTimer <= 0.0f)
+            {
+                LaunchMissile();
+                MissileLaunchTimer = 3.0f;
+            }
+
+        }
+        else 
+        {
+            StopAimingWeapon();
+        }
+
+        // Launch Cooldown
+
+        if(MissileLaunchTimer > 0.0f)
+        {
+            MissileLaunchTimer -= Time.deltaTime;
+        }
+
+    }
+
+    // Aiming Handler Methods
 
     public void AimWeapon()
     {
@@ -55,5 +91,12 @@ public class AimWeaponHandler : MonoBehaviour
             Bazooka.transform.localPosition = Vector3.Lerp(Bazooka.transform.localPosition, OriginalBazookaPosition, T);
             Bazooka.transform.localRotation = Quaternion.Lerp(Bazooka.transform.localRotation, Quaternion.Euler(Vector3.zero), T);
         }   
+    }
+
+    // Handles Missile Instantiaion
+
+    public void LaunchMissile()
+    {
+        GameObject LaunchedMissile = Instantiate(Missile, Camera.main.transform.position + (Camera.main.transform.forward * 2.0f), Camera.main.transform.rotation);
     }
 }

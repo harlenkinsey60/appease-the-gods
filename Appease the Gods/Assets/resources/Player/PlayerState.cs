@@ -7,6 +7,7 @@ public class PlayerState : MonoBehaviour
     [HideInInspector]
     public string State;
     private Animator PlayerAnimator;
+    public GameObject GatherParticleSystem;
 
     // Getters and Setters
 

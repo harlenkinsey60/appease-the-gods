@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionDestroyer : MonoBehaviour
+public class ParticleDestroyer : MonoBehaviour
 {
-    private float DecayTimer;
+    public float DecayTimer;
 
     void Start()
     {

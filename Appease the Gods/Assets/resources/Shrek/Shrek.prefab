@@ -1209,6 +1209,7 @@ GameObject:
   - component: {fileID: -2622651293040201481}
   - component: {fileID: 1831991195129404839}
   - component: {fileID: -8794411327712052018}
+  - component: {fileID: 1404513762634788915}
   m_Layer: 0
   m_Name: Shrek
   m_TagString: Untagged
@@ -1276,6 +1277,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd745b831e4879409847816f0efe7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1404513762634788915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455832701928066229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c7d6856e12e42459689d05fa15a136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Missile: {fileID: 2257477903399898423, guid: 9edfe8d7cf6705d49aef561b2026eae8, type: 3}
+  MissileSpawnCooldown: 7
+  NumberOfMissileSpawns: 3
+  TimeBetweenSpawns: 0.7
+  IsSpawning: 0
 --- !u!1 &4476097887785855823
 GameObject:
   m_ObjectHideFlags: 0

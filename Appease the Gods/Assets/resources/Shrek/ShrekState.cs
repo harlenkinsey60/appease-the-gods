@@ -7,6 +7,7 @@ public class ShrekState : MonoBehaviour
     Animator ShrekAnimator;
     ShrekHealth ShrekHealth;
     PlayerSoundManager PlayerSoundManager;
+    ShrekMissileSpawnHandler SMSH;
     private string State;
 
     // Getters and Setters
@@ -37,6 +38,13 @@ public class ShrekState : MonoBehaviour
             case "Decay":
 
                 ShrekAnimator.SetBool("Decay", true);
+
+                break;
+            
+            case "SpawningMissiles":
+
+                ShrekAnimator.SetBool("IsTPosing", true);
+                ShrekAnimator.SetBool("IsDancing", false);
 
                 break;
         }

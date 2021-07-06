@@ -9,6 +9,7 @@ public class ParticleDestroyer : MonoBehaviour
     void Start()
     {
         DecayTimer = 5.0f;
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
         GetComponent<AudioSource>().Play();
     }
 

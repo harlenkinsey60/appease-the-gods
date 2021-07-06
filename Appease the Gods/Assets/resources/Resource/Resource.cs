@@ -11,7 +11,7 @@ public class Resource : MonoBehaviour
 
     // Getters and Setters
 
-    public string GetType()
+    public string GetResourceType()
     {
         return Type;
     }

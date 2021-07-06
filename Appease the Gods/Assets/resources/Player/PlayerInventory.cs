@@ -25,7 +25,7 @@ public class PlayerInventory : MonoBehaviour
     private PlayerHUD PlayerHUD;
     private PlayerSoundManager PlayerSoundManager;
     
-    private GameObject InventoryUI;
+    public GameObject InventoryUI;
     private GameObject UpgradesTab;
     private GameObject RepairTab;
     private GameObject AppeaseTab;
@@ -172,6 +172,7 @@ public class PlayerInventory : MonoBehaviour
     {
         HideUI = hideUI;
         UpdateUI();
+        PlayerSoundManager.PlaySound("UIClick");
     }
     public bool GetHideUI()
     {
@@ -199,13 +200,12 @@ public class PlayerInventory : MonoBehaviour
         PickaxeType = -1;
         AxeDurability = 0;
         PickaxeDurability = 0;
-        HideUI = false;
+        HideUI = true;
         Selected = -1;
 
         PlayerHUD = GetComponent<PlayerHUD>();
         PlayerSoundManager = GetComponent<PlayerSoundManager>();
 
-        InventoryUI = transform.Find("InventoryUI").gameObject;
         UpgradesTab = InventoryUI.transform.Find("Upgrades").gameObject;
         RepairTab = InventoryUI.transform.Find("Repair").gameObject;
         AppeaseTab = InventoryUI.transform.Find("Appease").gameObject;
@@ -295,24 +295,30 @@ public class PlayerInventory : MonoBehaviour
         int Phase = PlayerHUD.GetPhase();
 
         // Updates Counts On All Tabs and checks if player has at least wood pickaxe and axe before trying to update
+        
+        if(AxeType < 2)
+        {
+            AxeWoodCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType + 1, 0].ToString();
+            AxeStoneCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType + 1, 1].ToString();
+            AxeMetalCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType + 1, 2].ToString();
+        }
+
         if(AxeType > -1)
         {
-            AxeWoodCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType, 0].ToString();
-            AxeStoneCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType, 1].ToString();
-            AxeMetalCount.GetComponent<Text>().text = AxeUpgradeCosts[AxeType, 2].ToString();
             AxeWoodCountRepair.GetComponent<Text>().text = (AxeRepairCosts[AxeType, 0] * AxeDurability).ToString();
             AxeStoneCountRepair.GetComponent<Text>().text = (AxeRepairCosts[AxeType, 1] * AxeDurability).ToString();
             AxeMetalCountRepair.GetComponent<Text>().text = (AxeRepairCosts[AxeType, 2] * AxeDurability).ToString();
         }
 
+        if(PickaxeType < 2)
+        {
+            PickaxeWoodCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType + 1, 0].ToString();
+            PickaxeStoneCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType + 1, 1].ToString();
+            PickaxeMetalCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType + 1, 2].ToString();
+        }
+
         if(PickaxeType > -1)
         {
-            PickaxeWoodCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 0].ToString();
-            PickaxeStoneCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 1].ToString();
-            PickaxeMetalCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 2].ToString();
-            PickaxeWoodCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 0].ToString();
-            PickaxeStoneCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 1].ToString();
-            PickaxeMetalCount.GetComponent<Text>().text = PickaxeUpgradeCosts[PickaxeType, 2].ToString();
             PickaxeWoodCountRepair.GetComponent<Text>().text = (PickaxeRepairCosts[PickaxeType, 0] * PickaxeDurability).ToString();
             PickaxeStoneCountRepair.GetComponent<Text>().text = (PickaxeRepairCosts[PickaxeType, 1] * PickaxeDurability).ToString();
             PickaxeMetalCountRepair.GetComponent<Text>().text = (PickaxeRepairCosts[PickaxeType, 2] * PickaxeDurability).ToString();
@@ -381,7 +387,7 @@ public class PlayerInventory : MonoBehaviour
         else if (PickaxeType == -1)
         {
             CurrentPickaxeImage.SetActive(false);
-            NextPickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[0, PickaxeType + 1]);
+            NextPickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[1, PickaxeType + 1]);
         }
 
         // Checks if player has Axe and if can be repaired
@@ -514,6 +520,9 @@ public class PlayerInventory : MonoBehaviour
         {
             ChangeTab("Upgrades");
             InventoryUI.SetActive(false);
+        } else 
+        {
+            InventoryUI.SetActive(true);
         }
     }
 

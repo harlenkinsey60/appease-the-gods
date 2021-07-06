@@ -151,9 +151,11 @@ public class PlayerSoundManager : MonoBehaviour
 
     public void ChangeVolume(float volume)
     {
-        for(int i = 0; i < AudioSources.Length; i++)
+        var AllAudioSourcesInScene = FindObjectsOfType<AudioSource>();
+
+        for(int i = 0; i < AllAudioSourcesInScene.Length; i++)
         {
-            AudioSources[i].volume = volume;
+            AllAudioSourcesInScene[i].volume = volume;
         }
 
         PlayerPrefs.SetFloat("Volume", volume);
@@ -164,12 +166,13 @@ public class PlayerSoundManager : MonoBehaviour
     void Start()
     {
         AudioSources = GetComponents<AudioSource>();
+        var AllAudioSourcesInScene = FindObjectsOfType<AudioSource>();
         
         if(PlayerPrefs.HasKey("Volume"))
         {
-            for(int i = 0; i < AudioSources.Length; i++)
+            for(int i = 0; i < AllAudioSourcesInScene.Length; i++)
             {
-                AudioSources[i].volume = PlayerPrefs.GetFloat("Volume");
+                AllAudioSourcesInScene[i].volume = PlayerPrefs.GetFloat("Volume");
             }
         }
        else

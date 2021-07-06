@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerPauseUI : MonoBehaviour
 {
-    private GameObject PauseUICanvas;
+    public GameObject PauseUICanvas;
     private GameObject ResumeButton;
     private GameObject QuitButton;
     private GameObject VolumeSlider;
     private PlayerSoundManager PlayerSoundManager;
     private bool HideUI;
+
+    PlayerState PlayerState;
 
     // Getters and Setters
 
@@ -23,6 +25,7 @@ public class PlayerPauseUI : MonoBehaviour
     {
         HideUI = hideUI;
         UpdateUI();
+        PlayerSoundManager.PlaySound("UIClick");
     }
     
     // Updates UI
@@ -52,13 +55,21 @@ public class PlayerPauseUI : MonoBehaviour
 
     // Button and slider event listener methods
 
+    private void ResumeGame()
+    {
+        SetHideUI(true);
+        PlayerState.SetState("Idle");
+    }
+
     private void UpdateVolume()
     {
         PlayerSoundManager.ChangeVolume(VolumeSlider.GetComponent<Slider>().value);
+        PlayerSoundManager.PlaySound("UIClick");
     }
 
     private void QuitGame()
     {
+        PlayerSoundManager.PlaySound("UIClick");
         Application.Quit();
     }
 
@@ -66,31 +77,24 @@ public class PlayerPauseUI : MonoBehaviour
 
     void Start()
     {
+
         //Dependencies
 
-        PauseUICanvas = transform.Find("PauseUI").gameObject;
         ResumeButton = PauseUICanvas.transform.Find("ResumeButton").gameObject;
         QuitButton = PauseUICanvas.transform.Find("QuitButton").gameObject;
         VolumeSlider = PauseUICanvas.transform.Find("VolumeSlider").gameObject;
         PlayerSoundManager = GetComponent<PlayerSoundManager>();
+        PlayerState = GetComponent<PlayerState>();
 
         //Event listeners
 
-        ResumeButton.GetComponent<Button>().onClick.AddListener(() => SetHideUI(true));
+        ResumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
         QuitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
         VolumeSlider.GetComponent<Slider>().onValueChanged.AddListener(delegate {UpdateVolume(); });
 
         // Initializes UI
-
+        SetHideUI(true);
         UpdateUI();
 
-    }
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SetHideUI(!GetHideUI());
-        }
     }
 }

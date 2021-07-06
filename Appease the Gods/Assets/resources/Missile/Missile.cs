@@ -17,6 +17,8 @@ public class Missile : MonoBehaviour
         MissileRigidbody = GetComponent<Rigidbody>();
         DecayTimer = 10.0f;
         Player = GameObject.Find("Player");
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume");
+        GetComponent<AudioSource>().Play();
     }
 
     void FixedUpdate()

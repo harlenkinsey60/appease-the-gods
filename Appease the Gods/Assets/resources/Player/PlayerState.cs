@@ -8,6 +8,7 @@ public class PlayerState : MonoBehaviour
     public string State;
     private Animator PlayerAnimator;
     public GameObject GatherParticleSystem;
+    PlayerPauseUI PlayerPauseUI;
     PlayerInventory PlayerInventory;
     CharacterController CharacterController;
 
@@ -79,7 +80,7 @@ public class PlayerState : MonoBehaviour
 
                 MovementSpeed = 0.114f;
 
-                // Handles Idle State Input
+                // Handles Walking State Input
 
                 if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
                 {
@@ -100,7 +101,7 @@ public class PlayerState : MonoBehaviour
                     SetState("Paused");
                 }
 
-                // Handles Idle State Animation
+                // Handles Walking State Animation
 
                 PlayerAnimator.SetBool("IsWalking", true);
                 PlayerAnimator.SetBool("IsRunning", false);
@@ -187,10 +188,38 @@ public class PlayerState : MonoBehaviour
                 Movement();
                 
                 break;
+
+            case "Inventory":
+
+                Cursor.lockState = CursorLockMode.None;
+
+                if(PlayerInventory.GetHideUI() == true)
+                {
+                    PlayerInventory.SetHideUI(false);
+                } 
+
+                if(Input.GetKeyDown(KeyCode.Tab))
+                {
+                    PlayerInventory.SetHideUI(true);
+                    SetState("Idle");
+                } 
+
+                break;
             
             case "Paused":
 
                 Cursor.lockState = CursorLockMode.None;
+
+                if(PlayerPauseUI.GetHideUI() == true)
+                {
+                    PlayerPauseUI.SetHideUI(false);
+                }
+
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PlayerPauseUI.SetHideUI(true);
+                    SetState("Idle");
+                }
 
                 break;
 
@@ -268,6 +297,7 @@ public class PlayerState : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
         PlayerInventory = GetComponent<PlayerInventory>();
         CharacterController = GetComponent<CharacterController>();
+        PlayerPauseUI = GetComponent<PlayerPauseUI>();
     }
 
     void Update()

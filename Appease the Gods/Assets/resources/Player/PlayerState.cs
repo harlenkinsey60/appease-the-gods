@@ -62,6 +62,8 @@ public class PlayerState : MonoBehaviour
                 {
                     SetState("Aiming");
                 }
+                
+                QuerySelected(); // Updates selected item based on input
 
                 // Handles Idle State Animation
 
@@ -70,7 +72,6 @@ public class PlayerState : MonoBehaviour
                 PlayerAnimator.SetBool("IsHitting", false);
 
                 LookAround();
-                Movement();
 
                 break;
 
@@ -101,6 +102,8 @@ public class PlayerState : MonoBehaviour
                     SetState("Paused");
                 }
 
+                QuerySelected(); // Updates selected item based on input
+
                 // Handles Walking State Animation
 
                 PlayerAnimator.SetBool("IsWalking", true);
@@ -108,7 +111,6 @@ public class PlayerState : MonoBehaviour
                 PlayerAnimator.SetBool("IsHitting", false);
 
                 LookAround();
-                Movement();
 
                 break;
 
@@ -135,6 +137,8 @@ public class PlayerState : MonoBehaviour
                     SetState("Paused");
                 }
 
+                QuerySelected(); // Updates selected item based on input
+
                 // Handles Running State Animation
 
                 PlayerAnimator.SetBool("IsWalking", false);
@@ -142,11 +146,7 @@ public class PlayerState : MonoBehaviour
                 PlayerAnimator.SetBool("IsHitting", false);
                 
                 LookAround();
-                Movement();
 
-                break;
-
-            case "Jumping":
                 break;
 
             case "Harvesting":
@@ -159,6 +159,8 @@ public class PlayerState : MonoBehaviour
                 {
                     SetState("Idle");
                 }
+
+                QuerySelected(); // Updates selected item based on input
 
                 // Handles Harvesting State Animation
 
@@ -184,8 +186,9 @@ public class PlayerState : MonoBehaviour
                     SetState("Idle");
                 }
 
+                QuerySelected(); // Updates selected item based on input
+
                 LookAround();
-                Movement();
                 
                 break;
 
@@ -198,11 +201,11 @@ public class PlayerState : MonoBehaviour
                     PlayerInventory.SetHideUI(false);
                 } 
 
-                if(Input.GetKeyDown(KeyCode.Tab))
+                if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape))
                 {
                     PlayerInventory.SetHideUI(true);
                     SetState("Idle");
-                } 
+                }
 
                 break;
             
@@ -231,12 +234,56 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+    void HandleMovement()
+    {
+        switch(State)
+        {
+            case "Idle":
+            
+            case "Walking":
+            
+            case "Running":
+
+                Movement();
+
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    Jump();
+                }
+
+                break;
+        }
+    }
+
     // Moves player
 
     void Movement()
     {
         CharacterController.Move(((transform.right * Input.GetAxis("Horizontal") * MovementSpeed) + (transform.forward * Input.GetAxis("Vertical") * MovementSpeed)));
-        CharacterController.Move(Vector3.up * -9.81f);
+        CharacterController.Move(Vector3.up * -9.81f * Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        if(CharacterController.isGrounded)
+        {
+            CharacterController.Move(Vector3.up * 2f);
+        }
+    }
+
+    // Updates Selected in PlayerInventory based on input
+
+    public void QuerySelected()
+    {
+        if(Input.mouseScrollDelta.y != 0f)
+        {
+            if(PlayerInventory.GetSelected() == 0)
+            {
+                PlayerInventory.SetSelected(1);
+            } else {
+                PlayerInventory.SetSelected(0);
+            }
+        } 
     }
 
     // Applies Mouse Movement to Player gameobject and camera
@@ -303,5 +350,10 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         HandleState();
+    }
+
+    void FixedUpdate()
+    {
+        HandleMovement();
     }
 }

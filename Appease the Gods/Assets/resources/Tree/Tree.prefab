@@ -3868,6 +3868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: Wood
+  Health: 7
 --- !u!64 &2630501447236438798
 MeshCollider:
   m_ObjectHideFlags: 0

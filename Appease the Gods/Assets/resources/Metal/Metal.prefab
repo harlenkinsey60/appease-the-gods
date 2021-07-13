@@ -1031,6 +1031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: Metal
+  Health: 7
 --- !u!65 &5240723648640405753
 BoxCollider:
   m_ObjectHideFlags: 0

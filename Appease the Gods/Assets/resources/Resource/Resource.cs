@@ -5,7 +5,7 @@ using UnityEngine;
 public class Resource : MonoBehaviour
 {
     public string Type;
-    private float Health;
+    public float Health;
     private Animator ResourceAnimator;
     private AudioSource DecaySound;
 
@@ -34,7 +34,7 @@ public class Resource : MonoBehaviour
     private void Decay()
     {
         ResourceAnimator.SetBool("Decay", true);
-        
+        GetComponent<MeshCollider>().enabled = false;
     }
     
     public void PlayDecaySound()

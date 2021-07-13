@@ -7,74 +7,21 @@ public class PlayerSoundManager : MonoBehaviour
 {
     AudioSource[] AudioSources;
 
-    private float WalkSpeed = 0.45f;
-    private float RunSpeed = 0.325f;
-    private float GatherSpeed = 0.45f;
-
-    private IEnumerator WalkCoroutine()
-    {
-        while (true)
-        {    
-            yield return new WaitForSeconds(WalkSpeed);
-            AudioSources[3].Play();
-        }
-    }
-
-    private IEnumerator RunCoroutine()
-    {
-        while (true)
-        {    
-            yield return new WaitForSeconds(RunSpeed);
-            AudioSources[3].Play();
-        }
-    }
-
-    private IEnumerator GatherWoodCoroutine()
-    {
-        while (true)
-        {    
-            yield return new WaitForSeconds(GatherSpeed);
-            AudioSources[0].Play();
-        }
-    }
-
-    private IEnumerator GatherStoneCoroutine()
-    {
-        while (true)
-        {    
-            yield return new WaitForSeconds(GatherSpeed);
-            AudioSources[1].Play();
-        }
-    }
-
-    private IEnumerator GatherMetalCoroutine()
-    {
-        while (true)
-        {    
-            yield return new WaitForSeconds(GatherSpeed);
-            AudioSources[2].Play();
-        }
-    }
-    
-
     public void PlaySound(string soundName)
     {
         switch(soundName)
         {
             case "WoodHit":
-                StartCoroutine("GatherWoodCoroutine");
+                AudioSources[0].Play();
                 break;
             case "StoneHit":
-                StartCoroutine("GatherStoneCoroutine");
+                AudioSources[1].Play();
                 break;
             case "MetalHit":
-                StartCoroutine("GatherMetalCoroutine");
+                AudioSources[2].Play();
                 break;
-            case "Walking":
-                StartCoroutine("WalkCoroutine");
-                break;
-            case "Running":
-                StartCoroutine("RunCoroutine");
+            case "Footstep":
+                AudioSources[3].Play();
                 break;
             case "Jumping":
                 AudioSources[4].Play();
@@ -108,19 +55,16 @@ public class PlayerSoundManager : MonoBehaviour
         switch(soundName)
         {
             case "WoodHit":
-                StopCoroutine("GatherWoodCoroutine");
+                AudioSources[0].Stop();
                 break;
             case "StoneHit":
-                StopCoroutine("GatherStoneCoroutine");
+                AudioSources[1].Stop();
                 break;
             case "MetalHit":
-                StopCoroutine("GatherMetalCoroutine");
+                AudioSources[2].Stop();
                 break;
-            case "Walking":
-                StopCoroutine("WalkCoroutine");
-                break;
-            case "Running":
-                StopCoroutine("RunCoroutine");
+            case "Footstep":
+                AudioSources[3].Stop();
                 break;
             case "Jumping":
                 AudioSources[4].Stop();

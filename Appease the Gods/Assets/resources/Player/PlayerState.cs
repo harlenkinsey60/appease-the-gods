@@ -10,9 +10,18 @@ public class PlayerState : MonoBehaviour
     public GameObject GatherParticleSystem;
     PlayerPauseUI PlayerPauseUI;
     PlayerInventory PlayerInventory;
+    PlayerSoundManager PlayerSoundManager;
+    PlayerHUD PlayerHUD;
+    PlayerRaycast PlayerRaycast;
     CharacterController CharacterController;
 
     float MovementSpeed = 0.114f;
+    private float WalkSpeed = 0.45f;
+    private float RunSpeed = 0.325f;
+    private float GatherSpeed = 0.45f;
+
+    bool isHarvesting = false;
+    float TimeSinceLastGather = 0.0f;
 
     // Getters and Setters
 
@@ -58,6 +67,11 @@ public class PlayerState : MonoBehaviour
                    SetState("Harvesting");
                 }
 
+                if(Input.GetMouseButton(0) && PlayerHUD.InventorySlots[PlayerInventory.GetSelected()].GetName() == "")
+                {
+                    SetState("Punching");
+                }
+
                 if(Input.GetKey(KeyCode.Mouse1) && PlayerInventory.GetSelected() == 2)
                 {
                     SetState("Aiming");
@@ -70,6 +84,7 @@ public class PlayerState : MonoBehaviour
                 PlayerAnimator.SetBool("IsWalking", false);
                 PlayerAnimator.SetBool("IsRunning", false);
                 PlayerAnimator.SetBool("IsHitting", false);
+                PlayerAnimator.SetBool("IsPunching", false);
 
                 LookAround();
 
@@ -109,6 +124,7 @@ public class PlayerState : MonoBehaviour
                 PlayerAnimator.SetBool("IsWalking", true);
                 PlayerAnimator.SetBool("IsRunning", false);
                 PlayerAnimator.SetBool("IsHitting", false);
+                PlayerAnimator.SetBool("IsPunching", false);
 
                 LookAround();
 
@@ -142,6 +158,7 @@ public class PlayerState : MonoBehaviour
                 // Handles Running State Animation
 
                 PlayerAnimator.SetBool("IsWalking", false);
+                PlayerAnimator.SetBool("IsPunching", false);
                 PlayerAnimator.SetBool("IsRunning", true);
                 PlayerAnimator.SetBool("IsHitting", false);
                 
@@ -160,17 +177,70 @@ public class PlayerState : MonoBehaviour
                     SetState("Idle");
                 }
 
-                QuerySelected(); // Updates selected item based on input
-
                 // Handles Harvesting State Animation
 
                 PlayerAnimator.SetBool("IsWalking", false);
                 PlayerAnimator.SetBool("IsRunning", false);
+                PlayerAnimator.SetBool("IsPunching", false);
                 PlayerAnimator.SetBool("IsHitting", true);
+
+                LookAround();
 
                 break;
 
-            case "Taking_Damage":
+            case "Punching":
+                
+                Cursor.lockState = CursorLockMode.Locked;
+
+                // Handles Punching State Gather Routine Instantiation
+                
+                PlayerRaycast.SetObject();
+
+                if(PlayerRaycast.GetObject() != null && 
+                    PlayerRaycast.GetObject().GetComponent<Resource>() != null && 
+                    PlayerRaycast.GetObject().GetComponent<Resource>().GetResourceType() == "Wood" &&
+                    isHarvesting == false)
+                {
+                   isHarvesting = true;
+                   Gather(PlayerRaycast.GetObject().GetComponent<Resource>(), 1);
+                }
+                else if (PlayerRaycast.GetObject() == null || 
+                    PlayerRaycast.GetObject().GetComponent<Resource>() == null ||
+                    PlayerRaycast.GetObject().GetComponent<Resource>().GetResourceType() != "Wood") 
+                {
+                    isHarvesting = false;
+                }
+
+                if(isHarvesting == true)
+                {
+                    TimeSinceLastGather += Time.deltaTime;
+                    
+                    if(TimeSinceLastGather >= GatherSpeed)
+                    {
+                        TimeSinceLastGather = 0.0f;
+                        isHarvesting = false;
+                    }
+                }
+
+                // Handles Punching State Input
+
+                if(!Input.GetMouseButton(0))
+                {
+                    SetState("Idle");
+                    PlayerSoundManager.StopSound("WoodHit");
+                    isHarvesting = false;
+                    StopAllCoroutines();
+                }
+
+                // Handles Punching State Animation
+
+                PlayerAnimator.SetBool("IsWalking", false);
+                PlayerAnimator.SetBool("IsRunning", false);
+                PlayerAnimator.SetBool("IsHitting", false);
+                PlayerAnimator.SetBool("IsPunching", true);
+
+                LookAround();
+
                 break;
 
             case "Aiming":
@@ -275,15 +345,15 @@ public class PlayerState : MonoBehaviour
 
     public void QuerySelected()
     {
-        if(Input.mouseScrollDelta.y != 0f)
+        if (Input.mouseScrollDelta.y > 0f)
         {
-            if(PlayerInventory.GetSelected() == 0)
-            {
-                PlayerInventory.SetSelected(1);
-            } else {
-                PlayerInventory.SetSelected(0);
-            }
+            PlayerInventory.SetSelected(1);
+
         } 
+        else if (Input.mouseScrollDelta.y < 0f)
+        {
+            PlayerInventory.SetSelected(-1);
+        }
     }
 
     // Applies Mouse Movement to Player gameobject and camera
@@ -343,8 +413,11 @@ public class PlayerState : MonoBehaviour
         State = "Idle";
         PlayerAnimator = GetComponent<Animator>();
         PlayerInventory = GetComponent<PlayerInventory>();
+        PlayerHUD = GetComponent<PlayerHUD>();
         CharacterController = GetComponent<CharacterController>();
         PlayerPauseUI = GetComponent<PlayerPauseUI>();
+        PlayerRaycast = GetComponent<PlayerRaycast>();
+        PlayerSoundManager = GetComponent<PlayerSoundManager>();
     }
 
     void Update()
@@ -355,5 +428,31 @@ public class PlayerState : MonoBehaviour
     void FixedUpdate()
     {
         HandleMovement();
+    }
+
+    private void Gather(Resource resource, int amount)
+    {
+
+        if(resource.GetHealth() > 0) 
+        {
+            switch(resource.GetResourceType())
+            {
+                case "Wood":
+                    PlayerSoundManager.PlaySound("WoodHit");
+                    PlayerInventory.SetWoodCount(PlayerInventory.GetWoodCount() + amount);
+                    break;
+                case "Stone":
+                    PlayerSoundManager.PlaySound("StoneHit");
+                    PlayerInventory.SetStoneCount(PlayerInventory.GetStoneCount() + amount);
+                    break;
+                case "Metal":
+                    PlayerSoundManager.PlaySound("MetalHit");
+                    PlayerInventory.SetMetalCount(PlayerInventory.GetMetalCount() + amount);
+                    break;
+            }
+
+            resource.SetHealth(resource.GetHealth() - amount);
+            Instantiate(GatherParticleSystem, PlayerRaycast.GetPoint(), Quaternion.identity);
+        } 
     }
 }

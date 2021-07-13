@@ -12,13 +12,9 @@ public class PlayerHUD : MonoBehaviour
     private GameObject WoodCount;
     private GameObject StoneCount;
     private GameObject MetalCount;
-    private GameObject AxeSlot;
-    private GameObject PickaxeSlot;
-    private GameObject AxeSlotBacking;
-    private GameObject PickaxeSlotBacking;
+
     private GameObject TimerText;
-    private GameObject AxeDurabilityBar;
-    private GameObject PickaxeDurabilityBar;
+
 
     // Variables
 
@@ -26,6 +22,9 @@ public class PlayerHUD : MonoBehaviour
     private float Timer;
     private float[] PhaseTimes = new float[] {180.0f, 120.0f, 60.0f};
     private float Health;
+    
+    [HideInInspector]
+    public SlotItem[] InventorySlots;
 
 
     // Getters and Setters
@@ -56,32 +55,99 @@ public class PlayerHUD : MonoBehaviour
         MetalCount.GetComponent<Text>().text = metalCount.ToString();
     }
 
+    // Inventory slot interface methods
+
     public void SetAxeSprite(string spritePath)
     {
-        AxeSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>(spritePath);
+
+        // Finds axe in slots if exists and sets sprite
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == "Axe"){
+
+                slot.SetSprite(spritePath);
+                return;
+            }
+
+        }
+
+        // If slot with axe doesnt exist, then sets sprite of first available slot
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == ""){
+                
+                slot.SetSprite(spritePath);
+                return;
+            }
+
+        }
     }
 
     public void SetAxeDurability(int durability)
     {
-        AxeDurabilityBar.transform.localScale = new Vector3(0.192f * (durability / 100.0f), 0.192f, 1.0f);
-        AxeDurabilityBar.transform.localPosition = new Vector3(612.0f - (Mathf.Abs(durability - 100.0f) * 0.25f),-234.5f, 0.0f);
+
+        // Finds slot with pickaxe and sets durability
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == "Axe"){
+
+                slot.SetDurability(durability);
+                return;  
+            }
+        }
     }
 
     public void SetPickaxeSprite(string spritePath)
     {
-        PickaxeSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>(spritePath);
+
+        // Finds pickaxe in slots if exists and sets sprite
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == "Pickaxe"){
+
+                slot.SetSprite(spritePath);
+                return;
+            }
+
+        }
+        
+        // If slot with pickaxe doesnt exist, then sets sprite of first available slot
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == ""){
+                
+                slot.SetSprite(spritePath);
+                return;
+            }
+        }
     }
 
     public void SetPickaxeDurability(int durability)
     {
-        PickaxeDurabilityBar.transform.localScale = new Vector3(0.192f * (durability / 100.0f), 0.192f, 1.0f);
-        PickaxeDurabilityBar.transform.localPosition = new Vector3(519.3105f - (Mathf.Abs(durability - 100.0f) * 0.25f),-234.5f, 0.0f);
+
+        // Finds slot with pickaxe and sets durability
+
+        foreach( SlotItem slot in InventorySlots ) {
+            
+            if(slot.GetName() == "Pickaxe"){
+
+                slot.SetDurability(durability);
+                return;
+
+            }
+        }
     }
 
     public float GetHealth()
     {
         return Health;
     }
+
     public void SetHealth(float health)
     {
         Health = health;
@@ -99,16 +165,10 @@ public class PlayerHUD : MonoBehaviour
     {
         Color BaseColor = new Color(1,1,1,1);
         Color SelectedColor = new Color(0,0,0,1);
-        switch(selected)
+        
+        for(int i = 0; i < InventorySlots.Length; i++)
         {
-            case 0:
-                PickaxeSlotBacking.GetComponent<Image>().color = SelectedColor;
-                AxeSlotBacking.GetComponent<Image>().color = BaseColor;
-                break;
-            case 1:
-                PickaxeSlotBacking.GetComponent<Image>().color = BaseColor;
-                AxeSlotBacking.GetComponent<Image>().color = SelectedColor;
-                break;
+            InventorySlots[i].transform.Find("Backing").GetComponent<Image>().color = (i == selected) ? SelectedColor : BaseColor;
         }
     }
 
@@ -121,13 +181,9 @@ public class PlayerHUD : MonoBehaviour
         WoodCount = HUD.transform.Find("WoodCount").gameObject;
         StoneCount = HUD.transform.Find("StoneCount").gameObject;
         MetalCount = HUD.transform.Find("MetalCount").gameObject;
-        AxeSlot = HUD.transform.Find("AxeSlot").gameObject;
-        PickaxeSlot = HUD.transform.Find("PickaxeSlot").gameObject;
         TimerText = HUD.transform.Find("TimerPanel").Find("TimerText").gameObject;
-        AxeDurabilityBar = HUD.transform.Find("AxeDurabilityBar").gameObject;
-        PickaxeDurabilityBar = HUD.transform.Find("PickaxeDurabilityBar").gameObject;
-        AxeSlotBacking = HUD.transform.Find("AxeSlotBacking").gameObject;
-        PickaxeSlotBacking = HUD.transform.Find("PickaxeSlotBacking").gameObject;
+
+        InventorySlots = FindObjectsOfType<SlotItem>();
 
         Phase = 0;
         Timer = PhaseTimes[0];

@@ -6,6 +6,7 @@ public class PlayerRaycast : MonoBehaviour
 {
 
     private GameObject RecentlyHitGameObject;
+    private Vector3 HitPoint;
 
     // if Raycast hits something then sets RecentlyHitGameObject to recently
     // hit gameobject and to null if it hits nothing
@@ -18,6 +19,7 @@ public class PlayerRaycast : MonoBehaviour
         if(Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             RecentlyHitGameObject = hit.collider.gameObject;
+            HitPoint = hit.point;
         }
         else {
             RecentlyHitGameObject = null;
@@ -25,11 +27,14 @@ public class PlayerRaycast : MonoBehaviour
 
     }
 
-    // returns RecentlyHitObject for use with other components
-
     public GameObject GetObject()
     {
         return RecentlyHitGameObject;
+    }
+
+    public Vector3 GetPoint()
+    {
+        return HitPoint;
     }
 
 }

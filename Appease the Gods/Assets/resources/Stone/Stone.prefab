@@ -1268,6 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: Stone
+  Health: 7
 --- !u!65 &871914570059572912
 BoxCollider:
   m_ObjectHideFlags: 0

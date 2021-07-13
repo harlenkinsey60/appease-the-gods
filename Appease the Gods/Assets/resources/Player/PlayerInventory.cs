@@ -96,102 +96,9 @@ public class PlayerInventory : MonoBehaviour
     private GameObject MetalCountAppease;
     private GameObject AppeaseButton;
 
-// Start of Getters and Setters
+// Monobehavior Methods
 
-    public void SetWoodCount(int woodCount)
-    {
-        WoodCount = woodCount;
-        UpdateUI();
-    }
-    public int GetWoodCount()
-    {
-        return WoodCount;
-    }
-
-    public void SetStoneCount(int stoneCount)
-    {
-        StoneCount = stoneCount;
-        UpdateUI();
-    }
-    public int GetStoneCount()
-    {
-        return StoneCount;
-    }
-
-    public void SetMetalCount(int metalCount)
-    {
-        MetalCount = metalCount;
-        UpdateUI();
-    }
-    public int GetMetalCount()
-    {
-        return MetalCount;
-    }
-
-    public void SetAxeType(int axeType)
-    {
-        AxeType = axeType;
-        UpdateUI();
-    }
-    public int GetAxeType()
-    {
-        return AxeType;
-    }
-    
-    public void SetPickaxeType(int pickaxeType)
-    {
-        PickaxeType = pickaxeType;
-        UpdateUI();
-    }
-    public int GetPickaxeType()
-    {
-        return PickaxeType;
-    }
-
-    public void SetAxeDurability(int axeDurability)
-    {
-        AxeDurability = axeDurability;
-        UpdateUI();
-    }
-    public int GetAxeDurability()
-    {
-        return AxeDurability;
-    }
-
-    public void SetPickaxeDurability(int pickaxeDurability)
-    {
-        PickaxeDurability = pickaxeDurability;
-        UpdateUI();
-    }
-    public int GetPickaxeDurability()
-    {
-        return PickaxeDurability;
-    }
-
-    public void SetHideUI(bool hideUI)
-    {
-        HideUI = hideUI;
-        UpdateUI();
-        PlayerSoundManager.PlaySound("UIClick");
-    }
-    public bool GetHideUI()
-    {
-        return HideUI;
-    }
-
-    public void SetSelected(int selected)
-    {
-        Selected = selected;
-        UpdateUI();
-    }
-    public int GetSelected()
-    {
-        return Selected;
-    }
-
-// End of Getters and Setters
-
-    void Start()
+void Start()
     {
         WoodCount = 0;
         StoneCount = 0;
@@ -201,7 +108,7 @@ public class PlayerInventory : MonoBehaviour
         AxeDurability = 0;
         PickaxeDurability = 0;
         HideUI = true;
-        Selected = -1;
+        Selected = 0;
 
         PlayerHUD = GetComponent<PlayerHUD>();
         PlayerSoundManager = GetComponent<PlayerSoundManager>();
@@ -289,6 +196,121 @@ public class PlayerInventory : MonoBehaviour
 
         UpdateUI();
     }
+
+// Start of Getters and Setters
+
+    public void SetWoodCount(int woodCount)
+    {
+        WoodCount = woodCount;
+        UpdateUI();
+    }
+    public int GetWoodCount()
+    {
+        return WoodCount;
+    }
+
+    public void SetStoneCount(int stoneCount)
+    {
+        StoneCount = stoneCount;
+        UpdateUI();
+    }
+    public int GetStoneCount()
+    {
+        return StoneCount;
+    }
+
+    public void SetMetalCount(int metalCount)
+    {
+        MetalCount = metalCount;
+        UpdateUI();
+    }
+    public int GetMetalCount()
+    {
+        return MetalCount;
+    }
+
+    public void SetAxeType(int axeType)
+    {
+        AxeType = axeType;
+        UpdateUI();
+    }
+    public int GetAxeType()
+    {
+        return AxeType;
+    }
+    
+    public void SetPickaxeType(int pickaxeType)
+    {
+        PickaxeType = pickaxeType;
+        UpdateUI();
+    }
+    public int GetPickaxeType()
+    {
+        return PickaxeType;
+    }
+
+    public void SetAxeDurability(int axeDurability)
+    {
+        AxeDurability = axeDurability;
+        UpdateUI();
+    }
+    public int GetAxeDurability()
+    {
+        return AxeDurability;
+    }
+
+    public void SetPickaxeDurability(int pickaxeDurability)
+    {
+        PickaxeDurability = pickaxeDurability;
+        UpdateUI();
+    }
+    public int GetPickaxeDurability()
+    {
+        return PickaxeDurability;
+    }
+
+    public void SetHideUI(bool hideUI)
+    {
+        HideUI = hideUI;
+        UpdateUI();
+        PlayerSoundManager.PlaySound("UIClick");
+    }
+    public bool GetHideUI()
+    {
+        return HideUI;
+    }
+
+    public void SetSelected(int selected)
+    {
+
+        if (Selected < 2 && selected == 1)
+        {
+            Selected += 1;
+        }
+        else if (Selected == 2 && selected == 1)
+        {
+            Selected = 0;
+        }
+
+        if (Selected > 0 && selected == -1)
+        {
+            Selected -= 1;
+        }
+        else if (Selected == 0 && selected == -1)
+        {
+            Selected = 2;
+        }
+
+        UpdateUI();
+    }
+
+    public int GetSelected()
+    {
+        return Selected;
+    }
+
+// End of Getters and Setters
+
 
     private void UpdateUI()
     {   
@@ -505,14 +527,7 @@ public class PlayerInventory : MonoBehaviour
 
         // Updates Selected
 
-        if(Selected == 0)
-        {
-            PlayerHUD.SetSelected(0);
-        }
-        else
-        {
-            PlayerHUD.SetSelected(1);
-        }
+        PlayerHUD.SetSelected(Selected);
 
         // Hides UI if HideUI is true
 

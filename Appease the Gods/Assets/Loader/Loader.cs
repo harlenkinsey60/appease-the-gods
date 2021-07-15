@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class Loader : MonoBehaviour
 {
-    GameObject Tree;
-    GameObject Stone;
-    GameObject Metal;
+    public GameObject Tree;
+    public GameObject Stone;
+    public GameObject Metal;
     List<Vector2> PotentialPoints = new List<Vector2>();
 
     void Start()
     {
-        Tree = Resources.Load<GameObject>("Tree/Tree");
-        Stone = Resources.Load<GameObject>("Stone/Stone");
-        Metal = Resources.Load<GameObject>("Metal/Metal");
-
         LoadResources();
     }
 

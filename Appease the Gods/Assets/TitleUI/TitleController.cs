@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 public class TitleController : MonoBehaviour
 {
 
-    void Start()
-    {
-        
-    }
-
     public void Quit()
     {
         Application.Quit();

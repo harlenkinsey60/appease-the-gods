@@ -57,7 +57,7 @@ public class PlayerHUD : MonoBehaviour
 
     // Inventory slot interface methods
 
-    public void SetAxeSprite(string spritePath)
+    public void SetAxeSprite(Sprite sprite)
     {
 
         // Finds axe in slots if exists and sets sprite
@@ -66,7 +66,7 @@ public class PlayerHUD : MonoBehaviour
             
             if(slot.GetName() == "Axe"){
 
-                slot.SetSprite(spritePath);
+                slot.SetSprite(sprite);
                 return;
             }
 
@@ -78,7 +78,7 @@ public class PlayerHUD : MonoBehaviour
             
             if(slot.GetName() == ""){
                 
-                slot.SetSprite(spritePath);
+                slot.SetSprite(sprite);
                 return;
             }
 
@@ -100,7 +100,7 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetPickaxeSprite(string spritePath)
+    public void SetPickaxeSprite(Sprite sprite)
     {
 
         // Finds pickaxe in slots if exists and sets sprite
@@ -109,7 +109,7 @@ public class PlayerHUD : MonoBehaviour
             
             if(slot.GetName() == "Pickaxe"){
 
-                slot.SetSprite(spritePath);
+                slot.SetSprite(sprite);
                 return;
             }
 
@@ -121,7 +121,7 @@ public class PlayerHUD : MonoBehaviour
             
             if(slot.GetName() == ""){
                 
-                slot.SetSprite(spritePath);
+                slot.SetSprite(sprite);
                 return;
             }
         }
@@ -150,15 +150,15 @@ public class PlayerHUD : MonoBehaviour
 
     public void SetHealth(float health)
     {
-        Health = health;
+        Health = (health < 0.0f) ? 0.0f : health;
 
         // Sets scale of HealthBar based on health
 
-        HealthBar.transform.localScale = new Vector3(0.5f * (health / 100.0f), 0.3f, 1.0f);
+        HealthBar.transform.localScale = new Vector3(0.5f * (Health / 100.0f), 0.3f, 1.0f);
 
         // Moves HealthBar so that it correctly overlaps HealthBarBacking
 
-        HealthBar.transform.localPosition = new Vector3(-527.0f - (Mathf.Abs(health - 100.0f) * 1.23f),-235.0f, 0.0f);
+        HealthBar.transform.localPosition = new Vector3(-527.0f - (Mathf.Abs(Health - 100.0f) * 1.23f),-235.0f, 0.0f);
     }
 
     public void SetSelected(int selected)

@@ -9,7 +9,12 @@ ModelImporter:
   - first:
       74: -5252816984213320552
     second: idle
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nature_Mat_01
+    second: {fileID: 2100000, guid: 98c16086b388c9a40824cf6daf01a61a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

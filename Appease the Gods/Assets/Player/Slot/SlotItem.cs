@@ -7,7 +7,7 @@ public class SlotItem : MonoBehaviour
 {
     private string Name;
     private int Durability;
-    private string SpritePath;
+    private Sprite Sprite;
 
     public GameObject ItemImage;
     public GameObject DurabilityBar;
@@ -35,8 +35,8 @@ public class SlotItem : MonoBehaviour
         UpdateUI();
     }
 
-    public void SetSprite(string spritePath){
-        SpritePath = spritePath;
+    public void SetSprite(Sprite sprite){
+        Sprite = sprite;
         UpdateUI();
     }
 
@@ -51,7 +51,7 @@ public class SlotItem : MonoBehaviour
 
         } else {
 
-            ItemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(SpritePath);
+            ItemImage.GetComponent<Image>().sprite = Sprite;
             DurabilityBar.SetActive(true);
             DurabilityBar.transform.localScale = new Vector3(0.192f * (Durability / 100.0f), 0.192f, 1.0f);
             DurabilityBar.transform.localPosition = new Vector3(0.0f - (Mathf.Abs(Durability - 100.0f) * 0.25f),-20.0f, 0.0f);

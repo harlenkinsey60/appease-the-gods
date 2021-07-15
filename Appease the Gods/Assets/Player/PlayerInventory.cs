@@ -20,7 +20,8 @@ public class PlayerInventory : MonoBehaviour
     private int[,] AxeRepairCosts = new int[,] {{ 2, 0, 0 }, { 3, 3, 0 }, { 6, 6, 6 }};
     private int[,] PickaxeRepairCosts = new int[,] {{ 2, 0, 0 }, { 4, 4, 0 }, { 6, 8, 8 }};
     private int[,] AppeasePhaseCosts = new int[,] {{ 50, 0, 0 }, { 150, 200, 0 }, { 200, 250, 300 }};
-    private string[,] ToolSpritePaths = new string[,] {{"ToolInventorySprites/WoodAxe", "ToolInventorySprites/StoneAxe", "ToolInventorySprites/MetalAxe"}, {"ToolInventorySprites/WoodPickaxe", "ToolInventorySprites/StonePickaxe", "ToolInventorySprites/MetalPickaxe"}};
+
+    public List<Sprite> ToolSprites = new List<Sprite>();
 
     private PlayerHUD PlayerHUD;
     private PlayerSoundManager PlayerSoundManager;
@@ -357,8 +358,8 @@ void Start()
         if(AxeType < 2 && AxeType > -1)
         {
             CurrentAxeImage.SetActive(true);
-            CurrentAxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[0, AxeType]);
-            NextAxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[0, AxeType + 1]);
+            CurrentAxeImage.GetComponent<Image>().sprite = ToolSprites[0 + AxeType];
+            NextAxeImage.GetComponent<Image>().sprite = ToolSprites[0 + AxeType];
         }
         else if (AxeType == 2)
         {
@@ -379,7 +380,7 @@ void Start()
         else if (AxeType == -1)
         {
             CurrentAxeImage.SetActive(false);
-            NextAxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[0, AxeType + 1]);
+            NextAxeImage.GetComponent<Image>().sprite = ToolSprites[0];
         }
 
     // Checks if player has Pickaxe and if it is fully upgraded and shows appropriate objects
@@ -387,8 +388,8 @@ void Start()
         if(PickaxeType < 2 && PickaxeType > -1)
         {
             CurrentPickaxeImage.SetActive(true);
-            CurrentPickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[1, PickaxeType]);
-            NextPickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[1, PickaxeType + 1]);
+            CurrentPickaxeImage.GetComponent<Image>().sprite = ToolSprites[3 + PickaxeType];
+            NextPickaxeImage.GetComponent<Image>().sprite = ToolSprites[3 + PickaxeType];
         }
         else if (PickaxeType == 2)
         {
@@ -409,14 +410,14 @@ void Start()
         else if (PickaxeType == -1)
         {
             CurrentPickaxeImage.SetActive(false);
-            NextPickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[1, PickaxeType + 1]);
+            NextPickaxeImage.GetComponent<Image>().sprite = ToolSprites[3];
         }
 
         // Checks if player has Axe and if can be repaired
 
         if(AxeType > -1)
         {
-            AxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[0, AxeType]);
+            AxeImage.GetComponent<Image>().sprite = ToolSprites[0 + AxeType];
         }
         else 
         {
@@ -435,7 +436,7 @@ void Start()
 
         if(PickaxeType > -1)
         {
-            PickaxeImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(ToolSpritePaths[1, PickaxeType]);
+            PickaxeImage.GetComponent<Image>().sprite = ToolSprites[3 + PickaxeType];
         }
         else
         {
@@ -512,12 +513,12 @@ void Start()
 
         if(AxeType != -1)
         {
-            PlayerHUD.SetAxeSprite(ToolSpritePaths[0, AxeType]);
+            PlayerHUD.SetAxeSprite(ToolSprites[0 + AxeType]);
         }
 
         if(PickaxeType != -1)
         {
-            PlayerHUD.SetPickaxeSprite(ToolSpritePaths[1, PickaxeType]);
+            PlayerHUD.SetPickaxeSprite(ToolSprites[3 + PickaxeType]);
         }
         
         // Sets PlayerHUD tool durabilities

@@ -8050,7 +8050,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6331654682859335354}
   - component: {fileID: -2172736936404375679}
-  - component: {fileID: -7649807638114095018}
   - component: {fileID: 7437120417211388887}
   - component: {fileID: 4952371141255597359}
   - component: {fileID: 1809464441854772090}
@@ -8114,18 +8113,6 @@ MonoBehaviour:
   GatherParticleSystem: {fileID: 7947123430084799393, guid: 67996a0bca2206047ac85b36f733e45a,
     type: 3}
   Rotation: {x: 0, y: 0, z: 0}
---- !u!114 &-7649807638114095018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6671342669105771520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc0ece32da44684c9969912b76bf83d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7437120417211388887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8138,6 +8125,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289d38aba8335ca47a4a9a8097998f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToolSprites:
+  - {fileID: 21300000, guid: 6895cdf30aca54f48b557282e1765773, type: 3}
+  - {fileID: 21300000, guid: 773f6c07868e0874fb46f9c5c000ed0d, type: 3}
+  - {fileID: 21300000, guid: 337d231665cac26469486f951c17c36a, type: 3}
+  - {fileID: 21300000, guid: 98b02a3f048a4c044a13e21f04618042, type: 3}
+  - {fileID: 21300000, guid: 7f05129f9e352014fab79c8a0bef8f23, type: 3}
+  - {fileID: 21300000, guid: 456214fa0660657428381b62206ea079, type: 3}
   InventoryUI: {fileID: 8436190806729633361}
 --- !u!114 &4952371141255597359
 MonoBehaviour:

@@ -22,6 +22,8 @@ public class PlayerHUD : MonoBehaviour
     private float Timer;
     private float[] PhaseTimes = new float[] {180.0f, 120.0f, 60.0f};
     private float Health;
+    PlayerState PlayerState;
+    public GameObject DeathScreen;
     
     [HideInInspector]
     public SlotItem[] InventorySlots;
@@ -159,6 +161,12 @@ public class PlayerHUD : MonoBehaviour
         // Moves HealthBar so that it correctly overlaps HealthBarBacking
 
         HealthBar.transform.localPosition = new Vector3(-527.0f - (Mathf.Abs(Health - 100.0f) * 1.23f),-235.0f, 0.0f);
+
+        if(Health == 0.0f)
+        {
+            DeathScreen.SetActive(true);
+            PlayerState.SetState("Dead");
+        }
     }
 
     public void SetSelected(int selected)
@@ -185,8 +193,11 @@ public class PlayerHUD : MonoBehaviour
 
         InventorySlots = FindObjectsOfType<SlotItem>();
 
+        PlayerState = GetComponent<PlayerState>();
+
         Phase = 0;
         Timer = PhaseTimes[0];
+        SetHealth(100.0f);
     }
 
     void Update()

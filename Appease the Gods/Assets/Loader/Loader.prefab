@@ -46,3 +46,4 @@ MonoBehaviour:
   Tree: {fileID: 4514377348028969721, guid: 9c0376fb01771df469f645d66378cd8f, type: 3}
   Stone: {fileID: 7291985376670305425, guid: 4397f97b67e01aa419d5f38844e23f6b, type: 3}
   Metal: {fileID: 5582012300946236089, guid: f8658a97b33937541a290bd25c0f0890, type: 3}
+  Grass: {fileID: 3093015084760932740, guid: 5e7b3ecf5039df244a7b9bd4b53ed299, type: 3}

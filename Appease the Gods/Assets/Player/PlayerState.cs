@@ -14,6 +14,7 @@ public class PlayerState : MonoBehaviour
     PlayerHUD PlayerHUD;
     PlayerRaycast PlayerRaycast;
     CharacterController CharacterController;
+    public GameObject DeathScreen;
 
     float MovementSpeed = 0.114f;
     private float WalkSpeed = 0.45f;
@@ -300,6 +301,8 @@ public class PlayerState : MonoBehaviour
 
                 Cursor.lockState = CursorLockMode.None;
 
+                PlayerInventory.SetHideUI(true);
+
                 break;
         }
     }
@@ -399,9 +402,10 @@ public class PlayerState : MonoBehaviour
         PlayerInventory.SetStoneCount(0);
         PlayerInventory.SetMetalCount(0);
 
-        // Destroys death screen object and changes state
+        // Hides death screen object and changes state
 
-        Destroy(GameObject.Find("DeathScreen"));
+        DeathScreen.SetActive(false);
+        PlayerHUD.SetHealth(100.0f);
         SetState("Idle");
     }
 
